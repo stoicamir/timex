@@ -40,8 +40,8 @@ class Day extends Component
             ->sortBy(function ($event){
                         $event->startTime;
         });
-        return collect($events)->filter(function ($events) use ($timespamp){
-            return $this->eventInDay($events->start,$timespamp);
+        return collect($events)->filter(function ($event) use ($timespamp){
+            return $this->eventInDay($event->start, $event->end, $timespamp);
 
         });
     }
@@ -51,9 +51,9 @@ class Day extends Component
         return view('timex::calendar.day');
     }
 
-    protected function eventInDay($event,$timespamp)
+    protected function eventInDay($eventStart, $eventEnd, $timespamp)
     {
-        return $event == $timespamp;
+        return $eventStart <= $timespamp && $eventEnd >= $timespamp;
     }
 
 
